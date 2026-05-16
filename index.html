@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PopCinema - Cartelera Interactiva</title>
-    <!-- CDN de Tailwind CSS -->
+    <!-- Se fuerza el protocolo https para evitar bloqueos de contenido mixto en Azure -->
     <script src="https://tailwindcss.com"></script>
-    <!-- Font Awesome para Iconos -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         .line-clamp-3 {
@@ -18,10 +17,9 @@
         }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen flex flex-col antialiased">
+<body class="bg-gray-950 text-gray-100 font-sans min-h-screen flex flex-col">
 
-    <!-- Encabezado / Navbar -->
-    <header class="border-b border-gray-800 bg-gray-900/60 backdrop-blur-md sticky top-0 z-40">
+    <header class="border-b border-gray-800 bg-gray-900/50 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-film text-red-500 text-2xl animate-pulse"></i>
@@ -29,69 +27,52 @@
                     PopCinema
                 </span>
             </div>
-            <div class="text-sm text-gray-400 bg-gray-800/80 px-3 py-1 rounded-full border border-gray-700/60 flex items-center gap-2">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                API en Vivo
+            <div class="text-sm text-gray-400 bg-gray-800 px-3 py-1 rounded-full border border-gray-700">
+                <i class="fa-solid fa-circle text-green-500 text-xs mr-1"></i> API en Vivo
             </div>
         </div>
     </header>
 
-    <!-- Contenedor Principal -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- Panel de Filtros Corregido para Producción/Azure -->
-        <section class="bg-gray-900/40 border border-gray-800/80 rounded-2xl p-6 mb-8 shadow-2xl backdrop-blur-sm">
-            <div class="flex items-center gap-2 mb-5">
-                <i class="fa-solid fa-sliders text-red-500"></i>
-                <h2 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Panel de Búsqueda y Filtros</h2>
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8 shadow-xl">
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-sliders text-red-400"></i>
+                <h2 class="text-lg font-semibold text-gray-200">Panel de Búsqueda y Filtros</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <!-- Buscador por Texto -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="relative">
-                    <label class="block text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-widest">Buscar Película</label>
+                    <label class="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Buscar Película</label>
                     <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
                         <input type="text" id="search-input" placeholder="Ej: Violet Evergarden..." 
-                            class="w-full bg-gray-950/80 border border-gray-700/60 rounded-xl pl-10 pr-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors shadow-inner">
+                            class="w-full bg-gray-950 border border-gray-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors">
                     </div>
                 </div>
 
-                <!-- Selector de Género -->
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-widest">Género / Categoría</label>
-                    <div class="relative">
-                        <select id="genre-select" 
-                            class="w-full bg-gray-950/80 border border-gray-700/60 rounded-xl px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-red-500 transition-colors cursor-pointer appearance-none">
-                            <option value="">Todos los géneros</option>
-                        </select>
-                        <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-[10px] pointer-events-none"></i>
-                    </div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Género / Categoría</label>
+                    <select id="genre-select" 
+                        class="w-full bg-gray-950 border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-red-500 transition-colors appearance-none cursor-pointer">
+                        <option value="">Todos los géneros</option>
+                    </select>
                 </div>
 
-                <!-- Selector de Ubicación -->
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-widest">Ubicación / Cine</label>
-                    <div class="relative">
-                        <select id="location-select" 
-                            class="w-full bg-gray-950/80 border border-gray-700/60 rounded-xl px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-red-500 transition-colors cursor-pointer appearance-none">
-                            <option value="">Todas las ubicaciones</option>
-                        </select>
-                        <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-[10px] pointer-events-none"></i>
-                    </div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Ubicación / Cine</label>
+                    <select id="location-select" 
+                        class="w-full bg-gray-950 border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-red-500 transition-colors appearance-none cursor-pointer">
+                        <option value="">Todas las ubicaciones</option>
+                    </select>
                 </div>
             </div>
         </section>
 
-        <!-- Contenedor de Tarjetas de Películas -->
+        <!-- El contenedor que el JavaScript de app.js va a rellenar automáticamente -->
         <div id="movies-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Renderizado dinámico desde app.js -->
         </div>
 
-        <!-- Estado Vacío (Filtros sin resultados) -->
         <div id="empty-state" class="hidden text-center py-16">
             <i class="fa-solid fa-clapperboard text-5xl text-gray-700 mb-4"></i>
             <p class="text-xl font-medium text-gray-400">No encontramos películas con esos filtros</p>
@@ -99,24 +80,20 @@
         </div>
     </main>
 
-    <!-- Modal de Detalles -->
     <div id="movie-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-2xl w-full overflow-hidden transform scale-95 transition-transform duration-300 relative">
             <button id="close-modal" class="absolute top-4 right-4 bg-gray-950/80 hover:bg-red-500/20 text-gray-400 hover:text-red-400 p-2 rounded-full border border-gray-800 transition-colors z-10">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
             <div id="modal-content">
-                <!-- Contenido dinámico desde app.js -->
             </div>
         </div>
     </div>
 
-    <!-- Pie de Página -->
     <footer class="border-t border-gray-900 bg-gray-950 py-6 text-center text-xs text-gray-600">
         &copy; 2026 PopCinema Inc. Optimizada con Fetch API Asíncrono.
     </footer>
 
-    <!-- Script de la Aplicación -->
     <script src="app.js"></script>
 </body>
 </html>
