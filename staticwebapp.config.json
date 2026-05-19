@@ -1,0 +1,13 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  },
+  "routes": [
+    {
+      "route": "/api/*",
+      "backend": {
+        "apiRoute": "http://52.171.58.51:8080/api/"
+      }
+    }
+  ]
+}
