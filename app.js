@@ -1,5 +1,5 @@
 ﻿// Configuración global de la API
-const API_URL = 'http://52.171.58.51:8080/api/cartelera';
+const API_URL = '/api/cartelera';
 
 // JSON de respaldo por si la API se cae o tiene problemas de CORS en entorno local
 const FALLBACK_DATA = [
